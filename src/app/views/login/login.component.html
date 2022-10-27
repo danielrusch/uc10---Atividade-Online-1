@@ -2,14 +2,28 @@
   <form (ngSubmit)="receberDados()">
     <div class="campo-label">
       <label for="email">E-mail</label>
-      <input type="email" name="emai" id="email" placeholder="Ex: daniel@123games.com" [(ngModel)]="userModel.email">
+      <input
+        type="email"
+        name="emai"
+        id="email"
+        placeholder="Ex: daniel@123games.com"
+        [(ngModel)]="userModel.email"
+      />
     </div>
 
     <div class="campo-label">
       <label for="senha">Senha</label>
-      <input type="password" name="password" id="senha" placeholder="Digite sua senha" [(ngModel)]="userModel.password">
+      <input
+        type="password"
+        name="password"
+        id="senha"
+        placeholder="Digite sua senha"
+        [(ngModel)]="userModel.password"
+      />
     </div>
 
-    <input id="botao-enviar" type="submit" value="Fazer Login">
+    <input id="botao-enviar" type="submit" value="Fazer Login" />
   </form>
+
+  <div id="mensagem" *ngIf="mensagem != ''">{{ mensagem }}</div>
 </main>
