@@ -6,27 +6,52 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
+  constructor(private LoginService: LoginService, private router: Router) {}
 
-  constructor(private LoginService:LoginService,private router: Router ) { }
-
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   userModel = new User();
 
-  mensagem = ""
-  
-  receberDados() {this.LoginService.login (this.userModel).subscribe((response) => {
-    console.log("deu certo")
-    this.router.navigateByUrl("/")
-  }, (erro) => {
-    // console.log(erro)
-    // alert(erro.error)
-    this.mensagem = erro.error
-  })
-  
+  mensagem = '';
+
+  receberDados() {
+    const ListaPalavras: string[] = [
+      'select ',
+      'from ',
+      'drop ',
+      'or ',
+      'having ',
+      'group ',
+      'insert ',
+      'exec ',
+      '"',
+      "'",
+      '--',
+      '#',
+      '*',
+      '; ',
+    ];
+
+    ListaPalavras.forEach((palavra) => {
+      if (this.userModel.email.toLowerCase().includes(palavra)) {
+        this.mensagem = 'Dados inválidos';
+        return;
+      }
+    });
+
+    this.LoginService.login(this.userModel).subscribe(
+      (response) => {
+        console.log('deu certo');
+        this.router.navigateByUrl('/');
+      },
+      (erro) => {
+        // console.log(erro)
+        // alert(erro.error)
+        this.mensagem = erro.error;
+      }
+    );
   }
 }
